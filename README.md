@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# 렌더링 최적화(무한스크롤, 스크롤 시 element 렌더링, 이미지 최적화 등)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
