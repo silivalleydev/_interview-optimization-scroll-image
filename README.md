@@ -126,7 +126,7 @@ observer.observe(targetElement);
 3. 사용 사례의 다양성:
 - 이미지 Lazy Loading, 무한 스크롤, 애니메이션 트리거 등 다양한 시나리오에 적합.
 
-#### IntersectionObserver의 크로스브라우징 지원
+#### IntersectionObserver의 크로스브라우징 지원(폴리필 관련)
 
 1. 브라우저 지원
 - IntersectionObserver는 대부분의 최신 브라우저에서 지원됩니다.
@@ -208,3 +208,118 @@ if (!('IntersectionObserver' in window)) {
 
 #### 결론
 - intersection-observer Polyfill은 프로젝트의 **진입 파일(entry point)**에 추가하는 것이 가장 적합합니다. 이를 통해 애플리케이션 전반에서 IntersectionObserver를 IE에서도 사용할 수 있습니다.
+
+### Lighthouse 사용법
+#### Lighthouse란?
+- Lighthouse는 Google Chrome에 내장된 웹 성능, 접근성, SEO 등을 측정하는 도구입니다. 초기 로딩 성능, Largest Contentful Paint(LCP), Cumulative Layout Shift(CLS) 등의 주요 지표를 확인하고 개선할 수 있습니다.
+
+#### 사용 방법
+1. Chrome DevTools 열기
+- 브라우저에서 F12 키 또는 우클릭 → 검사 선택.
+
+2. Lighthouse 탭 이동
+- DevTools의 상단 메뉴에서 Lighthouse 탭 선택.
+
+3. 검사 항목 선택
+- 분석하려는 카테고리 선택:
+    - Performance: 성능.
+    - Accessibility: 접근성.
+    - Best Practices: 베스트 프랙티스.
+    - SEO: 검색 엔진 최적화.
+    - PWA: 프로그레시브 웹 앱.
+
+4. Analyze 버튼 클릭
+- "Analyze page load" 버튼을 눌러 분석 시작.
+- 완료 후 성능 점수와 개선 권장 사항을 확인.
+
+### React DevTools Profiler 사용법
+
+#### Profiler란?
+- React DevTools Profiler는 React 애플리케이션의 렌더링 성능을 분석할 수 있는 도구입니다. 각 컴포넌트가 렌더링된 시간, 불필요한 리렌더링 여부 등을 확인할 수 있습니다.
+
+#### 설치 방법
+
+1. 브라우저 확장 프로그램 설치
+- **React Developer Tools**를 설치합니다.
+
+2.  DevTools에서 Profiler 사용
+- DevTools를 열고 "⚛️ React" 탭 선택.
+- Profiler 탭으로 이동.
+
+#### 사용 방법
+
+1. 프로파일링 시작
+- ⚛️ React 탭 → Profiler 탭 이동.
+- Start profiling 버튼 클릭.
+
+2. 애플리케이션 상호작용
+- 애플리케이션을 사용하는 동안 데이터를 수집합니다.
+
+3. 프로파일링 중단 및 데이터 분석
+- Stop profiling 클릭 후 컴포넌트 렌더링 데이터를 확인.
+- 각 컴포넌트의 렌더링 시간, 호출 횟수, 불필요한 렌더링 여부를 확인.
+
+4. "Why did this render?" 기능 활용
+- 컴포넌트를 선택하고 "Why did this render?" 기능을 사용해 렌더링 원인을 분석.
+
+### Lighthouse와 Profiler로 위의 사례 트래킹
+
+#### 사례 1: Lighthouse로 초기 로딩 성능 분석
+
+1. 트래킹 방법
+- Lighthouse를 실행하고 Performance를 선택.
+
+2. 주요 지표 확인:
+- LCP (Largest Contentful Paint): 가장 큰 콘텐츠 렌더링 시간.
+- CLS (Cumulative Layout Shift): 레이아웃 이동 점수.
+
+3. 문제 전/후 비교:
+- 최적화 전후의 LCP와 CLS 값을 비교하여 개선 정도 확인.
+
+4. 최적화 작업:
+- 코드 스플리팅, WebP 이미지 포맷 변환, CSS/JS 최소화.
+
+#### 사례 2: React DevTools Profiler로 불필요한 렌더링 최적화
+
+1. 트래킹 방법
+- Profiler에서 Start profiling 후 애플리케이션 상호작용.
+
+2. 렌더링 시간 확인:
+- ListItem 컴포넌트가 데이터 업데이트 시 모두 재렌더링되는지 확인.
+
+3. "Why did this render?" 분석:
+- Props 참조 변경이 원인인지 파악.
+
+4. 최적화 작업:
+- React.memo 적용, useMemo로 정렬 로직 최적화.
+
+5. 최적화 후 다시 Profiler로 분석:
+- 렌더링 시간과 호출 횟수가 줄어드는지 확인.
+
+#### 사례 3: Webpack Bundle Analyzer로 번들 크기 최적화
+
+-  트래킹 방법
+1. Webpack Bundle Analyzer 설치:
+```
+npm install --save-dev webpack-bundle-analyzer
+```
+
+2. Webpack 설정에 Analyzer 플러그인 추가:
+```js
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+module.exports = {
+  plugins: [
+    new BundleAnalyzerPlugin(),
+  ],
+};
+```
+
+3. 분석 실행:
+- Analyzer UI를 통해 번들 내 불필요한 모듈 확인.
+- 번들 크기 최적화 전/후 비교.
+
+### 결론
+- Lighthouse는 초기 로딩 성능과 UX를 개선하기 위한 주요 도구입니다.
+- React DevTools Profiler는 렌더링 성능을 세밀히 분석하고, 최적화 전후의 변화를 확인하는 데 유용합니다.
+- Webpack Bundle Analyzer는 번들 크기를 시각적으로 분석하여 코드를 경량화하는 데 효과적입니다.

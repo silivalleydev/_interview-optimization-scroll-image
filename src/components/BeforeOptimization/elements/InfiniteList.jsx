@@ -4,6 +4,7 @@ import ListItem from './ListItem';
 function InfiniteList() {
   const [items, setItems] = useState(Array.from({ length: 10 }, (_, i) => i + 1));
   const [loading, setLoading] = useState(false);
+  const [stateChanged, setstateChanged] = useState(false);
 
   const loadMore = () => {
     console.log('Before isLoading =>', loading);
@@ -31,6 +32,7 @@ function InfiniteList() {
 
   return (
     <div>
+      <button onClick={() => setstateChanged(!stateChanged)}>state changed: {stateChanged}</button>
       {items.map((item) => (
         <ListItem key={item} item={item} />
       ))}

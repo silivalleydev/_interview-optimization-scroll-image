@@ -8,6 +8,7 @@ function InfiniteList() {
   const [items, setItems] = useState(Array.from({ length: 10 }, (_, i) => i + 1)); // 초기 아이템 10개
   // 상태: 로딩 중 여부
   const [loading, setLoading] = useState(false);
+  const [stateChanged, setstateChanged] = useState(false);
 
   // 새로운 데이터를 로드하는 함수
   const loadMore = useCallback(() => {
@@ -55,13 +56,14 @@ function InfiniteList() {
 
   // 스크롤 이벤트 리스너 등록 및 해제
   useEffect(() => {
-    const throttledScroll = throttle(handleScroll, 200); // 200ms 간격으로 쓰로틀링
+    const throttledScroll = throttle(handleScroll, 50); // 200ms 간격으로 쓰로틀링
     window.addEventListener('scroll', throttledScroll); // 스크롤 이벤트 리스너 추가
     return () => window.removeEventListener('scroll', throttledScroll); // 컴포넌트 언마운트 시 리스너 제거
   }, [throttle, handleScroll]);
 
   return (
     <div>
+      <button onClick={() => setstateChanged(!stateChanged)}>state changed: {stateChanged}</button>
       {/* Suspense로 ListItem 컴포넌트 로딩 상태 처리 */}
       <Suspense fallback={<p>Loading...</p>}>
         {items.map((item) => (
