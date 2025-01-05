@@ -38,7 +38,6 @@ function LazyImage({ src, alt }) {
         objectFit: 'cover', // 이미지 비율 유지 및 잘림 처리
         backgroundColor: '#f1f1f1', // 로드 전 배경색 (플레이스홀더 효과)
       }}
-      loading='lazy'
     />
   );
 }
