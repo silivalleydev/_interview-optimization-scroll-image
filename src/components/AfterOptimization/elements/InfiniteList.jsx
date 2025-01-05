@@ -11,6 +11,7 @@ function InfiniteList() {
 
   // 새로운 데이터를 로드하는 함수
   const loadMore = useCallback(() => {
+    console.log('After loading', loading);
     if (loading) return; // 이미 로딩 중이면 실행하지 않음
     setLoading(true); // 로딩 상태로 설정
     setTimeout(() => {
@@ -19,6 +20,27 @@ function InfiniteList() {
       setLoading(false); // 로딩 완료
     }, 1000); // 1초 지연 (API 호출을 시뮬레이션)
   }, [loading]);
+
+  // 쓰로틀링 함수
+  const throttle = useCallback((func, limit) => {
+    let lastFunc;
+    let lastRan;
+    return function (...args) {
+      const now = Date.now();
+      if (!lastRan) {
+        func.apply(this, args);
+        lastRan = now;
+      } else {
+        clearTimeout(lastFunc);
+        lastFunc = setTimeout(() => {
+          if (now - lastRan >= limit) {
+            func.apply(this, args);
+            lastRan = now;
+          }
+        }, limit - (now - lastRan));
+      }
+    };
+  }, []);
 
   // 스크롤 이벤트 처리 함수
   const handleScroll = useCallback(() => {
@@ -33,9 +55,10 @@ function InfiniteList() {
 
   // 스크롤 이벤트 리스너 등록 및 해제
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll); // 스크롤 이벤트 리스너 추가
-    return () => window.removeEventListener('scroll', handleScroll); // 컴포넌트 언마운트 시 리스너 제거
-  }, [handleScroll]);
+    const throttledScroll = throttle(handleScroll, 200); // 200ms 간격으로 쓰로틀링
+    window.addEventListener('scroll', throttledScroll); // 스크롤 이벤트 리스너 추가
+    return () => window.removeEventListener('scroll', throttledScroll); // 컴포넌트 언마운트 시 리스너 제거
+  }, [throttle, handleScroll]);
 
   return (
     <div>
