@@ -315,6 +315,31 @@ module.exports = {
 };
 ```
 
+2. 1. CRA 프로젝트의 경우
+- react-app-rewired 패키지 설치
+```
+npm install react-app-rewired --save-dev
+```
+
+- config-overrides.js 루트에 생성
+```js
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+
+module.exports = function override(config) {
+  if (process.env.NODE_ENV === 'production') {
+    config.plugins.push(
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static', // 결과를 HTML 파일로 출력
+        openAnalyzer: true,    // 분석 결과를 브라우저에서 자동으로 엽니다.
+        reportFilename: 'bundle-report.html', // 결과 파일 이름
+      })
+    );
+  }
+  return config;
+};
+
+```
+
 3. 분석 실행:
 - Analyzer UI를 통해 번들 내 불필요한 모듈 확인.
 - 번들 크기 최적화 전/후 비교.
