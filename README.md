@@ -279,7 +279,7 @@ if (!('IntersectionObserver' in window)) {
 4. 최적화 작업:
 - 코드 스플리팅, WebP 이미지 포맷 변환, CSS/JS 최소화.
 
-#### 사례 2: React DevTools Profiler로 불필요한 렌더링 최적화
+#### 사례 2: React DevTools Profiler & why did you render?로 불필요한 렌더링 최적화
 
 1. 트래킹 방법
 - Profiler에서 Start profiling 후 애플리케이션 상호작용.
@@ -296,3 +296,32 @@ if (!('IntersectionObserver' in window)) {
 5. 최적화 후 다시 Profiler로 분석:
 - 렌더링 시간과 호출 횟수가 줄어드는지 확인.
 
+6. react-scan 설치
+```
+npm install react-scan --save-dev
+```
+
+7. index.js에 아래와 같이 추가
+```js
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { setupReactScan } from 'react-scan';
+
+if (process.env.NODE_ENV === 'development') {
+  setupReactScan();
+}
+
+ReactDOM.render(<App />, document.getElementById('root'));
+```
+
+### Profiler으로 리렌더링 포인트 비교 
+- F12 누르고 화살표버튼 누른 다음 Profile 탭으로 이동  
+<img src="./README/3.png" width="400px" height="300px" />
+
+- BeforeOptimization의 렌더링 rank 현황을보면 아래와 같이 엄청나게 많은 렌더링이 일어나고 있음, 특히 ListItem과 LazyImage쪽에 리렌더링이 다수 발생하는 것을 확인가능, 해당 컴포넌트들의 최적화가 필요
+<img src="./README/1.png" width="400px" height="800px" />
+
+- 최적화 이후를 나타내는 AfterOptimization의 렌더링 rank를 보면 그래프상으로도 현저하게 줄어있는 것을 확인, 아이템 컴포넌트 렌더링 시에만 렌더되는 것을 알 수 있음  
+<img src="./README/2.png" width="400px" height="100px" />  
+<img src="./README/4.png" width="400px" height="70px" />

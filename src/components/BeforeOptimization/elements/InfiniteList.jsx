@@ -32,7 +32,7 @@ function InfiniteList() {
 
   return (
     <div>
-      <button onClick={() => setstateChanged(!stateChanged)}>state changed: {stateChanged}</button>
+      <button onClick={() => setstateChanged(!stateChanged)}>state changed: {`${stateChanged}`}</button>
       {items.map((item) => (
         <ListItem key={item} item={item} />
       ))}
@@ -40,5 +40,5 @@ function InfiniteList() {
     </div>
   );
 }
-
+InfiniteList.whyDidYouRender = true;
 export default InfiniteList;

@@ -1,8 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import BeforeOptimization from './components/BeforeOptimization';
-import AfterOptimization from './components/AfterOptimization';
+
+const AfterOptimization = React.lazy(() => import('./components/AfterOptimization'))
 
 function App() {
   const [type, settype] = useState('before');
@@ -17,7 +17,7 @@ function App() {
       {type === 'before' ?
         <BeforeOptimization />
         :
-        <AfterOptimization />
+        <AfterOptimization /> 
       }
     </div>
   );

@@ -19,7 +19,9 @@ function ListItem({ item }) {
           observer.disconnect(); // 한 번만 관찰 후 중단
         }
       },
-      { threshold: 0.1 } // 10% 이상 요소가 보일 때 활성화
+      {
+        threshold: 0.1,// 10% 이상 요소가 보일 때 활성화
+      }
     );
 
     // Ref로 참조된 DOM 요소를 관찰
@@ -34,6 +36,7 @@ function ListItem({ item }) {
       ref={itemRef} // 관찰할 DOM 요소 참조
       style={{
         marginBottom: '20px', // 아이템 간 간격 설정
+        minHeight: 268,
         padding: '10px', // 아이템 내부 여백
         border: '1px solid #ccc', // 아이템 경계선
         background: isVisible ? '#ffffff' : '#f1f1f1', // 가시성에 따라 배경색 변경

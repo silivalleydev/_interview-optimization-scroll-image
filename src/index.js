@@ -2,7 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
+import { setOptions } from 'react-scan';
 
+if (process.env.NODE_ENV === 'development') {
+  setOptions({
+    trackAllComponents: true, // 모든 컴포넌트를 추적
+    logToConsole: true,       // 콘솔에 로그 출력
+  });
+}
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>

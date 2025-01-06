@@ -63,7 +63,7 @@ function InfiniteList() {
 
   return (
     <div>
-      <button onClick={() => setstateChanged(!stateChanged)}>state changed: {stateChanged}</button>
+      <button onClick={() => setstateChanged(!stateChanged)}>state changed: {`${stateChanged}`}</button>
       {/* Suspense로 ListItem 컴포넌트 로딩 상태 처리 */}
       <Suspense fallback={<p>Loading...</p>}>
         {items.map((item) => (
@@ -75,5 +75,5 @@ function InfiniteList() {
     </div>
   );
 }
-
+InfiniteList.whyDidYouRender = true;
 export default InfiniteList;
