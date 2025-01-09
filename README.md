@@ -1,5 +1,32 @@
 # 렌더링 최적화(무한스크롤, 스크롤 시 element 렌더링, 이미지 최적화 등)
 
+- [렌더링 최적화(무한스크롤, 스크롤 시 element 렌더링, 이미지 최적화 등)](#렌더링-최적화무한스크롤-스크롤-시-element-렌더링-이미지-최적화-등)
+    - [InfiniteList 컴포넌트](#infinitelist-컴포넌트)
+      - [최적화 내용](#최적화-내용)
+    - [ListItem 컴포넌트](#listitem-컴포넌트)
+      - [최적화 내용](#최적화-내용-1)
+    - [LazyImage 컴포넌트](#lazyimage-컴포넌트)
+      - [최적화 내용](#최적화-내용-2)
+    - [IntersectionObserver란?](#intersectionobserver란)
+      - [IntersectionObserver의 주요 특징](#intersectionobserver의-주요-특징)
+      - [옵션 설명](#옵션-설명)
+    - [IntersectionObserver의 장점](#intersectionobserver의-장점)
+      - [IntersectionObserver의 크로스브라우징 지원(폴리필 관련)](#intersectionobserver의-크로스브라우징-지원폴리필-관련)
+      - [크로스브라우징 이슈](#크로스브라우징-이슈)
+      - [결론](#결론)
+    - [Lighthouse 사용법](#lighthouse-사용법)
+      - [Lighthouse란?](#lighthouse란)
+      - [사용 방법](#사용-방법)
+    - [React DevTools Profiler 사용법](#react-devtools-profiler-사용법)
+      - [Profiler란?](#profiler란)
+      - [설치 방법](#설치-방법)
+      - [사용 방법](#사용-방법-1)
+    - [Lighthouse와 Profiler로 위의 사례 트래킹](#lighthouse와-profiler로-위의-사례-트래킹)
+      - [사례 1: Lighthouse로 초기 로딩 성능 분석](#사례-1-lighthouse로-초기-로딩-성능-분석)
+      - [사례 2: React DevTools Profiler \& why did you render?로 불필요한 렌더링 최적화](#사례-2-react-devtools-profiler--why-did-you-render로-불필요한-렌더링-최적화)
+    - [Profiler으로 리렌더링 포인트 비교](#profiler으로-리렌더링-포인트-비교)
+
+
 ### InfiniteList 컴포넌트
 #### 최적화 내용
 1. useCallback으로 함수 참조 고정:
